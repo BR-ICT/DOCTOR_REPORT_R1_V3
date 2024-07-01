@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptSummaryDoctorMonthXLSX" language="groovy" pageWidth="2900" pageHeight="595" orientation="Landscape" columnWidth="2860" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b954068b-5b15-493e-a300-79120de44b24">
+	<property name="ireport.zoom" value="1.0000000000000004"/>
+	<property name="ireport.x" value="1028"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB2"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="130"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="865"/>
+	<parameter name="PMonthNumber" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PYearNumber" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT A.UBORNO,A. OPCUNO, A.UBCONO,A. REPORT, A.DATERUNREPORT, A.DATERN1, A.DATESS, A.MONTHSS, A.YEARS, A.ADDR1,A. ADDR2,A. ADDR3, A.ADDR4, A.CITY, A.PROVINCE, A.OKCUNM2, A.MTTRQT, A.MTCAWE, A.NODOCTOR, A.DNAME, A.NODOCUMENT, A.ITEMS, A.OKCUA1, A.OKCUA2, A.OKCUA3
+,NEWADDRESS.HOUSENO AS HOUSENO, NEWADDRESS.VILLAGE AS Village
+, NEWADDRESS.STREET AS Street, NEWADDRESS.TUMBON AS tumbon
+,NEWADDRESS.AMPURR AS Ampurr,NEWADDRESS.PROVINCE1 AS PROVINCE2 ,C.PACKAGE
+,DOCHISTORY.STAFFNAME,DOCHISTORY.STAFFNO
+FROM 
+(SELECT B.UBORNO,OKCUNO AS OPCUNO,B.UBCONO,'1' AS Report,DATERUNREPORT, SUBSTR(DATERUNREPORT,7,2)||'/' || SUBSTR(DATERUNREPORT,5,2)||'/'|| CAST(CAST(SUBSTR(DATERUNREPORT,1,4)as INT) AS VARCHAR(200))  AS DATERN1
+,SUBSTR(A.UAIVDT,7,2) as Datess
+,SUBSTR(A.UAIVDT,5,2) as Monthss ,  CAST(SUBSTR(A.UAIVDT,1,4)as INT)  AS YEARS,UAIVDT
+,TRIM(CUSTNAMES.OPCUA1) AS ADDR1,TRIM(CUSTNAMES.OPCUA2) as ADDR2,TRIM(CUSTNAMES.OPCUA3) as ADDR3,TRIM(CUSTNAMES.OPCUA4) as ADDR4,
+TRIM(CUSTNAMES.OPTOWN) as CITY,TRIM(jv.CTTX40) as Province,e.OKCUNM AS  OKCUNM2
+,SUM(C.MTTRQT*-1) MTTRQT,sum(c.MTCAWE * -1)AS MTCAWE,TRIM(ffff.NODOCTOR) AS NODOCTOR,ffff.DNAME,
+CASE 
+WHEN MIN (B.UBITNO) IN ('FFA2100L020','FFGS6001000','FFO1200L020'
+,'FFO1400L020','FF003001000','FF004001000','FF005001000'
+,'FF006001000','FF007001000','FF008001000','FF009001000'
+,'FF010001000','FF011001000','FF012001000','FF013001000'
+,'FF017001000','FF018001000','FF019001000','FF020001000'
+,'FF024000008','FF024001000','FF025000008','FF031001000'
+,'FF032001000','FF037001000','FF039001000' )
+THEN 'F' || GGGGG.NODOCUMENT
+ELSE GGGGG.NODOCUMENT
+END AS NODOCUMENT,
+MIN (B.UBITNO ) AS ITEMS,OKCUA1,OKCUA2,OKCUA3,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%เลขที่%' THEN
+SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('%เลขที่%',OKCUA1||OKCUA2||OKCUA3) + 8,LOCATE(' ',OKCUA1) - 2) 
+else  SUBSTRING(OKCUA1||OKCUA2||OKCUA3,1,LOCATE(' ',OKCUA1||OKCUA2||OKCUA3))
+END as HOUSENO,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%หมู่ที่%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่ที่',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 7),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่ที่',OKCUA1||OKCUA2||OKCUA3) + 7 ,LENGTH(OKCUA1||OKCUA2||OKCUA3)))	)
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%หมู่%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่',OKCUA1||OKCUA2||OKCUA3) + 4 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 4),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่',OKCUA1||OKCUA2||OKCUA3) + 4 ,LENGTH(OKCUA1||OKCUA2||OKCUA3)))	) 
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ม.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ม.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ม.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Village,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ถนน%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถนน',OKCUA1||OKCUA2||OKCUA3) + 3 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 3),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถนน',OKCUA1||OKCUA2||OKCUA3) + 3 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+ WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ถ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถ.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถ.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Street,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%แขวง%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 4),LOCATE('แขวง',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3)+ 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ต.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('ต.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ตำบล%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('ตำบล',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3)+ 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS tumbon,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%เขต%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3) + 3,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 3),LOCATE('เขต',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3)+ 3,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3) + 3,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%อำเภอ%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3) + 5,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 5),LOCATE('อำเภอ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3)+ 5,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3) + 5,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%อ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('อ.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Ampurr
+,CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%จ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('จ.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%จังหวัด%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 7),LOCATE('จังหวัด',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3)+ 7,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS PROVINCE1
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,
+     M3FDBPRD.OCUSMA E , brldta0100.PRODOCTOREST14 AS ffff ,BRLDTA0100.PRODOCTORAUTO AS GGGGG
+    ,M3FDBPRD.OCUSAD AS CUSTNAMES,M3FDBPRD.CSYTAB AS jv
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND GGGGG.NODOCUMENT <> ''
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND B.UBITNO NOT IN ('FFA2100L020','FFGS6001000','FFO1200L020'
+,'FFO1400L020','FF003001000','FF004001000','FF005001000'
+,'FF006001000','FF007001000','FF008001000','FF009001000'
+,'FF010001000','FF011001000','FF012001000','FF013001000'
+,'FF017001000','FF018001000','FF019001000','FF020001000'
+,'FF024000008','FF024001000','FF025000008','FF031001000'
+,'FF032001000','FF037001000','FF039001000' )
+AND CAST(SUBSTR(DATERUNREPORT,5,2)AS INT)=  $P{PMonthNumber}
+AND CAST(SUBSTR(DATERUNREPORT,1,4)as INT)= $P{PYearNumber}
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO	
+AND D.MMITGR BETWEEN 'SH01'
+AND 'SH07'
+AND A.UACONO = E.OKCONO
+AND A.UACUNO = E.OKCUNO
+AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+AND GGGGG.UBORNO=A.UAORNO
+AND CUSTNAMES.OPCUNO=A.UACUNO
+AND CUSTNAMES.OPCONO=A.UACONO
+AND OPADID='DELI01'
+AND jv.ctstco ='ECAR' AND jv.CTCONO = CUSTNAMES.OPCONO AND jv.ctstky = CUSTNAMES.OPECAR
+GROUP BY GGGGG.DATERUNREPORT,B.UBORNO,A.UAIVNO,A.UAIVDT,A.UACUNO,E.OKCUNM,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3)
+,ffff.NODOCTOR,ffff.DNAME,GGGGG.NODOCUMENT,CUSTNAMES.OPCUA1,CUSTNAMES.OPCUA2,CUSTNAMES.OPCUA3,CUSTNAMES.OPCUA4,CUSTNAMES.OPTOWN,jv.CTTX40,CUSTNAMES.OPCUNO,B.UBCONO,OKCUA1,OKCUA2,OKCUA3,OKCUNO
+UNION
+SELECT B.UBORNO,OPCUNO,B.UBCONO,'3' AS Report,A.UAIVDT,SUBSTR(A.UAIVDT,7,2)||'/' || SUBSTR(A.UAIVDT,5,2)||'/'|| CAST(CAST(SUBSTR(A.UAIVDT,1,4)as INT)+543 AS VARCHAR(200))  AS DATERN1,  SUBSTR(A.UAIVDT,7,2) AS Datess,SUBSTR(A.UAIVDT,5,2) AS Monthss, CAST(SUBSTR(A.UAIVDT,1,4) AS INT) AS YEARS
+,A.UAIVDT,TRIM(CUSTNAMES.OPCUA1) AS ADDR1,TRIM(CUSTNAMES.OPCUA2) as ADDR2,TRIM(CUSTNAMES.OPCUA3) as ADDR3,TRIM(CUSTNAMES.OPCUA4) as ADDR4,TRIM(CUSTNAMES.OPTOWN) as CITY,TRIM(jv.CTTX40) as Province
+,E.OKCUNM AS OKCUNM2,SUM(C.MTTRQT*-1) MTTRQT,sum(c.MTCAWE * -1)AS MTCAWE
+,ffff.NODOCTOR,ffff.DNAME,ESTCOMPANY || '/' || SUBSTRING(INRNNO,0,3) || '/' || SUBSTRING(INRNNO,3) AS NODOCUMENT , 'local' AS ITEMS
+,OKCUA1,OKCUA2,OKCUA3
+,CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%เลขที่%' THEN
+SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('%เลขที่%',OKCUA1||OKCUA2||OKCUA3) + 8,LOCATE(' ',OKCUA1) - 2) 
+else  SUBSTRING(OKCUA1||OKCUA2||OKCUA3,1,LOCATE(' ',OKCUA1||OKCUA2||OKCUA3))
+END as HOUSENO,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%หมู่ที่%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่ที่',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 7),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่ที่',OKCUA1||OKCUA2||OKCUA3) + 7 ,LENGTH(OKCUA1||OKCUA2||OKCUA3)))	)
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%หมู่%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่',OKCUA1||OKCUA2||OKCUA3) + 4 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 4),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('หมู่',OKCUA1||OKCUA2||OKCUA3) + 4 ,LENGTH(OKCUA1||OKCUA2||OKCUA3)))	) 
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ม.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ม.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ม.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Village,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ถนน%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถนน',OKCUA1||OKCUA2||OKCUA3) + 3 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 3),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถนน',OKCUA1||OKCUA2||OKCUA3) + 3 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+ WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ถ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถ.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),0,LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ถ.',OKCUA1||OKCUA2||OKCUA3) + 2 ,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Street,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%แขวง%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 4),LOCATE('แขวง',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3)+ 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('แขวง',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ต.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('ต.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ต.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%ตำบล%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('ตำบล',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3)+ 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('ตำบล',OKCUA1||OKCUA2||OKCUA3) + 4,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS tumbon,
+CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%เขต%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3) + 3,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 3),LOCATE('เขต',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3)+ 3,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('เขต',OKCUA1||OKCUA2||OKCUA3) + 3,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%อำเภอ%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3) + 5,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 5),LOCATE('อำเภอ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3)+ 5,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อำเภอ',OKCUA1||OKCUA2||OKCUA3) + 5,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%อ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('อ.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('อ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS Ampurr
+,CASE WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%จ.%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 2),LOCATE('จ.',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3)+ 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จ.',OKCUA1||OKCUA2||OKCUA3) + 2,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+WHEN OKCUA1||OKCUA2||OKCUA3 LIKE '%จังหวัด%' THEN
+SUBSTRING(SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3) - 7),LOCATE('จังหวัด',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3)+ 7,LENGTH(OKCUA1||OKCUA2||OKCUA3))),
+LOCATE(' ',SUBSTRING(OKCUA1||OKCUA2||OKCUA3,LOCATE('จังหวัด',OKCUA1||OKCUA2||OKCUA3) + 7,LENGTH(OKCUA1||OKCUA2||OKCUA3))))
+END AS PROVINCE1
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,M3FDBPRD.OCUSMA E
+,M3FDBPRD.OCUSAD AS CUSTNAMES,BRLDTA0100.ITEMNRN1 AS ITEMS
+,BRLDTA0100.PRODOCTOREST14 AS ffff
+,BRLDTA0100.INVCNRN1 AS GGGGG
+,M3FDBPRD.CSYTAB AS jv
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND C.MTCONO = D.MMCONO														
+AND C.MTITNO = D.MMITNO
+AND (D.MMITGR BETWEEN 'SH01' AND 'SH07' OR D.MMITGR = 'MO00')
+AND A.UACONO = E.OKCONO
+AND CUSTNAMES.OPCUNO=A.UACUNO
+AND CUSTNAMES.OPCONO=A.UACONO
+AND A.UACUNO = E.OKCUNO
+AND OPADID='DELI01'
+AND SUBSTR(A.UAIVDT,5,2) = $P{PMonthNumber}
+AND SUBSTR(A.UAIVDT,1,4) = $P{PYearNumber}
+AND B.UBDLIX=C.MTRIDI
+AND B.UBPONR=C.MTRIDL
+AND A.UADLIX=C.MTRIDI
+AND jv.ctstco ='ECAR' AND jv.CTCONO = CUSTNAMES.OPCONO AND jv.ctstky = CUSTNAMES.OPECAR
+AND A.UAIVDT BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+AND ITEMS.RNCONO = B.UBCONO
+AND ITEMS.RNITNO = B.UBITNO
+AND GGGGG.INORNO = A.UAORNO
+GROUP BY B.UBORNO,A.UAIVNO,A.UAIVDT,A.UACUNO,E.OKCUNM,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3),OPCUNO
+,ffff.NODOCTOR,CUSTNAMES.OPCUA1,CUSTNAMES.OPCUA2,CUSTNAMES.OPCUA3,CUSTNAMES.OPCUA4,ffff.DNAME,ffff.ESTCOMPANY,GGGGG.INRNNO,CUSTNAMES.OPCUA1,CUSTNAMES.OPCUA2,CUSTNAMES.OPTOWN,jv.CTTX40,B.UBORNO,B.UBCONO,OKCUA2,OKCUA3,OKCUA1 ) AS A
+LEFT JOIN
+BRLDTA0100.POSTCODEPROVINCE B
+ON (LOCATE(POSTCODE, A.OKCUA1 ) > 0 AND OKCUA1 NOT LIKE '%ภาษี%')
+OR (LOCATE(POSTCODE, A.OKCUA2 ) > 0 AND  OKCUA2 NOT LIKE '%ภาษี%')
+OR (LOCATE(POSTCODE, A.OKCUA3 ) > 0 AND  OKCUA3 NOT LIKE '%ภาษี%')
+LEFT JOIN 
+	(SELECT UBCONO, UBDIVI, UBORNO,
+	MAX(CASE WHEN CONTITNO IS NOT NULL THEN '1' ELSE '' END) AS PACKAGE
+	FROM M3FDBPRD.ODLINE a
+	LEFT JOIN 
+	(SELECT CONTCONO,CONTITNO , CONTAFTER, CONTSTAUS FROM BRLDTA0100.ITEMCONTAINER WHERE CONTSTAUS = 1) AS b ON b.CONTCONO = a.UBCONO AND b.CONTITNO = a.UBITNO  
+	WHERE CONTCONO = '10'
+	AND UBLMDT > CONTAFTER
+	GROUP BY UBCONO, UBDIVI, UBORNO) C
+ON C.UBORNO = A.UBORNO
+AND C.UBCONO = A.UBCONO
+LEFT JOIN (SELECT b.CARO_ORNO,NEWADDRESS.RNTKNO,NEWADDRESS.RNADDR,CASE WHEN NEWADDRESS.RNADDR LIKE '%เลขที่%' THEN
+SUBSTRING(NEWADDRESS.RNADDR,LOCATE('%เลขที่%',NEWADDRESS.RNADDR) + 8,LOCATE(' ',NEWADDRESS.RNADDR) - 2) 
+else  SUBSTRING(NEWADDRESS.RNADDR,1,LOCATE(' ',NEWADDRESS.RNADDR))
+END as HOUSENO,
+CASE WHEN NEWADDRESS.RNADDR LIKE '%หมู่ที่%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('หมู่ที่',NEWADDRESS.RNADDR) + 7,LENGTH(NEWADDRESS.RNADDR) - 7),0,LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('หมู่ที่',NEWADDRESS.RNADDR) + 7 ,LENGTH(NEWADDRESS.RNADDR)))	)
+WHEN NEWADDRESS.RNADDR LIKE '%หมู่%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('หมู่',NEWADDRESS.RNADDR) + 4 ,LENGTH(NEWADDRESS.RNADDR) - 4),0,LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('หมู่',NEWADDRESS.RNADDR) + 4 ,LENGTH(NEWADDRESS.RNADDR)))	) 
+WHEN NEWADDRESS.RNADDR LIKE '%ม.%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ม.',NEWADDRESS.RNADDR) + 2 ,LENGTH(NEWADDRESS.RNADDR) - 2),0,LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ม.',NEWADDRESS.RNADDR) + 2 ,LENGTH(NEWADDRESS.RNADDR))))
+END AS Village,
+CASE WHEN NEWADDRESS.RNADDR LIKE '%ถนน%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ถนน',NEWADDRESS.RNADDR) + 3 ,LENGTH(NEWADDRESS.RNADDR) - 3),0,LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ถนน',NEWADDRESS.RNADDR) + 3 ,LENGTH(NEWADDRESS.RNADDR))))
+ WHEN NEWADDRESS.RNADDR LIKE '%ถ.%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ถ.',NEWADDRESS.RNADDR) + 2 ,LENGTH(NEWADDRESS.RNADDR) - 2),0,LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ถ.',NEWADDRESS.RNADDR) + 2 ,LENGTH(NEWADDRESS.RNADDR))))
+END AS Street,
+CASE WHEN NEWADDRESS.RNADDR LIKE '%แขวง%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('แขวง',NEWADDRESS.RNADDR) + 4,LENGTH(NEWADDRESS.RNADDR) - 4),LOCATE('แขวง',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('แขวง',NEWADDRESS.RNADDR)+ 4,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('แขวง',NEWADDRESS.RNADDR) + 4,LENGTH(NEWADDRESS.RNADDR))))
+WHEN NEWADDRESS.RNADDR LIKE '%ต.%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ต.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR) - 2),LOCATE('ต.',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ต.',NEWADDRESS.RNADDR)+ 2,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ต.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR))))
+WHEN NEWADDRESS.RNADDR LIKE '%ตำบล%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ตำบล',NEWADDRESS.RNADDR) + 4,LENGTH(NEWADDRESS.RNADDR) - 2),LOCATE('ตำบล',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ตำบล',NEWADDRESS.RNADDR)+ 4,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('ตำบล',NEWADDRESS.RNADDR) + 4,LENGTH(NEWADDRESS.RNADDR))))
+END AS tumbon,
+CASE WHEN NEWADDRESS.RNADDR LIKE '%เขต%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('เขต',NEWADDRESS.RNADDR) + 3,LENGTH(NEWADDRESS.RNADDR) - 3),LOCATE('เขต',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('เขต',NEWADDRESS.RNADDR)+ 3,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('เขต',NEWADDRESS.RNADDR) + 3,LENGTH(NEWADDRESS.RNADDR))))
+WHEN NEWADDRESS.RNADDR LIKE '%อำเภอ%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อำเภอ',NEWADDRESS.RNADDR) + 5,LENGTH(NEWADDRESS.RNADDR) - 5),LOCATE('อำเภอ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อำเภอ',NEWADDRESS.RNADDR)+ 5,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อำเภอ',NEWADDRESS.RNADDR) + 5,LENGTH(NEWADDRESS.RNADDR))))
+WHEN NEWADDRESS.RNADDR LIKE '%อ.%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อ.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR) - 2),LOCATE('อ.',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อ.',NEWADDRESS.RNADDR)+ 2,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('อ.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR))))
+END AS Ampurr
+,CASE WHEN NEWADDRESS.RNADDR LIKE '%กทม%' THEN
+'กรุงเทพ'
+WHEN NEWADDRESS.RNADDR LIKE '%กรุงเทพ%' THEN
+'กรุงเทพ'
+ WHEN NEWADDRESS.RNADDR LIKE '%จ.%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จ.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR) - 2),LOCATE('จ.',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จ.',NEWADDRESS.RNADDR)+ 2,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จ.',NEWADDRESS.RNADDR) + 2,LENGTH(NEWADDRESS.RNADDR))))
+WHEN NEWADDRESS.RNADDR LIKE '%จังหวัด%' THEN
+SUBSTRING(SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จังหวัด',NEWADDRESS.RNADDR) + 7,LENGTH(NEWADDRESS.RNADDR) - 7),LOCATE('จังหวัด',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จังหวัด',NEWADDRESS.RNADDR)+ 7,LENGTH(NEWADDRESS.RNADDR))),
+LOCATE(' ',SUBSTRING(NEWADDRESS.RNADDR,LOCATE('จังหวัด',NEWADDRESS.RNADDR) + 7,LENGTH(NEWADDRESS.RNADDR))))
+END AS PROVINCE1,RNDATE
+FROM BRLDTA0100.ADDRRN1 AS NEWADDRESS
+LEFT JOIN BRLDTA0100.SAL_CARORD b
+ON B.CARO_CARNO = NEWADDRESS.RNTKNO
+LEFT JOIN BRLDTA0100.TRANSRN1 AS TRANS
+ON TRANS.RNTKNO = NEWADDRESS.RNTKNO
+AND TRANS.RNCONO = NEWADDRESS.RNCONO
+AND TRANS.RNDIVI = NEWADDRESS.RNDIVI) AS NEWADDRESS ON NEWADDRESS.CARO_ORNO = A.UBORNO
+AND A.UAIVDT = NEWADDRESS.RNDATE
+LEFT JOIN(SELECT DOCC.HEADERNO,B.STAFFNAME,B.STAFFNO
+FROM BRLDTA0100.DOCTORHISTORY AS DOCC
+LEFT JOIN
+((SELECT NOASSISTANT AS staffno,ANAME AS staffname
+FROM BRLDTA0100.DOCTORASSISTANT
+WHERE STATUS = '1')
+UNION
+(SELECT NODOCTOR AS staffno ,DNAME AS staffname FROM BRLDTA0100.PRODOCTOREST14 AS ffff
+WHERE VARCHAR_FORMAT(current timestamp, 'YYYYMMDD') BETWEEN STARTDATE AND ENDDATE)) AS B
+ON b.STAFFNO = DOCC.APPROVER) AS DOCHISTORY
+ON DOCHISTORY.HEADERNO = A.UBORNO
+ORDER BY OPCUNO]]>
+	</queryString>
+	<field name="UBORNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBORNO"/>
+	</field>
+	<field name="OPCUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OPCUNO"/>
+	</field>
+	<field name="UBCONO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBCONO"/>
+	</field>
+	<field name="REPORT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="REPORT"/>
+	</field>
+	<field name="DATERUNREPORT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DATERUNREPORT"/>
+	</field>
+	<field name="DATERN1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATERN1"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATERN1"/>
+	</field>
+	<field name="DATESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATESS"/>
+		<property name="com.jaspersoft.studio.field.name" value="DATESS"/>
+	</field>
+	<field name="MONTHSS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MONTHSS"/>
+		<property name="com.jaspersoft.studio.field.name" value="MONTHSS"/>
+	</field>
+	<field name="YEARS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="YEARS"/>
+		<property name="com.jaspersoft.studio.field.name" value="YEARS"/>
+	</field>
+	<field name="ADDR1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDR1"/>
+	</field>
+	<field name="ADDR2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDR2"/>
+	</field>
+	<field name="ADDR3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDR3"/>
+	</field>
+	<field name="ADDR4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDR4"/>
+	</field>
+	<field name="CITY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CITY"/>
+	</field>
+	<field name="PROVINCE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCE"/>
+	</field>
+	<field name="OKCUNM2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUNM2"/>
+		<property name="com.jaspersoft.studio.field.name" value="OKCUNM2"/>
+	</field>
+	<field name="MTTRQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="MTTRQT"/>
+		<property name="com.jaspersoft.studio.field.name" value="MTTRQT"/>
+	</field>
+	<field name="MTCAWE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="MTCAWE"/>
+		<property name="com.jaspersoft.studio.field.name" value="MTCAWE"/>
+	</field>
+	<field name="NODOCTOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NODOCTOR"/>
+		<property name="com.jaspersoft.studio.field.name" value="NODOCTOR"/>
+	</field>
+	<field name="DNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DNAME"/>
+		<property name="com.jaspersoft.studio.field.name" value="DNAME"/>
+	</field>
+	<field name="NODOCUMENT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NODOCUMENT"/>
+		<property name="com.jaspersoft.studio.field.name" value="NODOCUMENT"/>
+	</field>
+	<field name="ITEMS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ITEMS"/>
+	</field>
+	<field name="OKCUA1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUA1"/>
+	</field>
+	<field name="OKCUA2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUA2"/>
+	</field>
+	<field name="OKCUA3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUA3"/>
+	</field>
+	<field name="HOUSENO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="HOUSENO"/>
+	</field>
+	<field name="VILLAGE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VILLAGE"/>
+	</field>
+	<field name="STREET" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="STREET"/>
+	</field>
+	<field name="TUMBON" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="TUMBON"/>
+	</field>
+	<field name="AMPURR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="AMPURR"/>
+	</field>
+	<field name="PROVINCE2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROVINCE2"/>
+	</field>
+	<field name="PACKAGE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PACKAGE"/>
+	</field>
+	<field name="STAFFNAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="STAFFNAME"/>
+	</field>
+	<field name="STAFFNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="STAFFNO"/>
+	</field>
+	<sortField name="REPORT"/>
+	<sortField name="NODOCUMENT"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46">
+			<staticText>
+				<reportElement x="0" y="0" width="140" height="46" uuid="289b8736-1288-4992-98f6-800af1715d09"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[พนักงานตรวจโรค 1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="135" height="46" uuid="90ffe6cf-5e71-4a06-99fb-073972915f97"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ทะเบียนพนักงานตรวจโรคสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1163" y="0" width="100" height="46" uuid="93bba494-c07a-4ef7-b017-d6ce49ac1c60"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[วันที่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1263" y="26" width="174" height="20" uuid="219af5f6-c4cb-426c-8a3f-e1fcd2b80678"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ชื่อ-สกุล]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1437" y="26" width="131" height="20" uuid="a8616e4b-0240-4e55-9952-24dd31198184"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[เลขที่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="0" width="140" height="46" uuid="4d401377-4fe6-4b7b-a77f-dfdbaaedabd5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[พนักงานตรวจโรค 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="0" width="135" height="46" uuid="c50237dd-b1f0-418c-b858-a89d40835327"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ทะเบียนพนักงานตรวจโรคสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="140" height="46" uuid="19a4eaf3-c9a3-4edf-a765-f2cb6bbb288f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[พนักงานตรวจโรค 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="0" width="135" height="46" uuid="057132a7-5ed5-4e7f-b179-7cad93f65f4a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ทะเบียนพนักงานตรวจโรคสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1263" y="0" width="867" height="26" uuid="1adf5c1c-59f0-4163-b9c4-de9f0d3d8d76"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[สถานที่ปลายที่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2130" y="0" width="97" height="46" uuid="f4d77d18-d159-49af-a39c-c2dd74b962b6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ชนิดเนื่อสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2227" y="0" width="93" height="46" uuid="991513c1-cfce-4416-a043-6a8db4b377c5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[จำนวน(ตัว)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2320" y="0" width="99" height="46" uuid="61d65747-2bb7-422d-b0e6-026aa0e2e3e6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[น้ำหนัก(กิโลกรัม)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2419" y="0" width="172" height="26" uuid="0796f602-d7ef-4eec-a2b0-d72c4dabb183"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[วิธีการรับรอง]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2419" y="26" width="79" height="20" uuid="569c2737-438e-4df6-bb66-40ce868dd026"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[รน.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2498" y="26" width="93" height="20" uuid="f4c4ebf5-0718-4f68-83d2-79191d5fcaee"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[บรรจุภัณฑ์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2591" y="0" width="111" height="46" uuid="4726b685-0bc4-4e21-b382-4b852cff29ba"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[เลขที่ใบ รน.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="825" y="0" width="182" height="46" uuid="e329cb7c-60da-4bd7-877d-7f66d4775138"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ชื่อโรงฆ่าสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1007" y="0" width="156" height="46" uuid="49ac4be3-f71a-462b-932f-5fa3285ce500"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ทะเบียนโรงฆ่าสัตว์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1568" y="26" width="125" height="20" uuid="13dabb6a-f36f-49df-bda7-e9b3b237a9a8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[หมู่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1693" y="26" width="116" height="20" uuid="2ce9db77-40e7-4734-9e20-021a6b63b2c0"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ถนน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1809" y="26" width="107" height="20" uuid="4df17c9c-bf0f-43fe-a3c2-390a151397dc"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ตำบล]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1916" y="26" width="107" height="20" uuid="8253e6d6-871d-4677-9041-c2193ad882a7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[อำเภอ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2023" y="26" width="107" height="20" uuid="f226b89f-e21e-4f2e-94f3-1291ee19c491"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[จังหวัด]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="140" height="35" uuid="3f7cb1cb-6840-4c42-9d57-2de051297944"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STAFFNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="0" width="135" height="35" uuid="787f5f09-b2b8-42dd-b1e2-898c0a77e778"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STAFFNO}.trim()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1163" y="0" width="100" height="35" uuid="aef4b6b4-1e49-4c86-9cbf-f7a40cd23a50"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATERN1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1263" y="0" width="174" height="35" uuid="14e2b935-7cf5-4bd0-aa47-6785a9e1e52c"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OKCUNM2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="275" y="0" width="140" height="35" uuid="1fab051b-ef24-4ba1-b1b4-8414db609bb8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="0" width="135" height="35" uuid="f96db571-c8f3-40a2-bd5a-001eb16fae1f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="140" height="35" uuid="5eb459e2-6cfe-487a-a396-3eb5f5cdd8ac"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="690" y="0" width="135" height="35" uuid="09c34b76-96b6-427f-ba6e-966c0437f487"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2130" y="0" width="97" height="35" uuid="e3f69833-3365-4f67-b834-67caec6c132a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[เนื้อเป็ด]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2227" y="0" width="93" height="35" uuid="81d0bb39-bfeb-4cb9-b9d2-7d94e02d8f4a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[0]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#;(#,##0.00#-)">
+				<reportElement x="2320" y="0" width="99" height="35" uuid="f17e16af-00aa-405b-8227-e936a4b5712e"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MTTRQT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2419" y="0" width="79" height="35" uuid="0dcf1e79-a685-4142-bda4-9ac6bd1e37b3"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2591" y="0" width="111" height="35" uuid="e72073b5-e1b5-41b6-b9f9-4d0f6a494b51"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NODOCUMENT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="825" y="0" width="182" height="35" uuid="b4ff1c79-130d-4210-ab62-e66db4de757a"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[บริษัท บางกอกแรนช์ จำกัด (มหาชน)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1007" y="0" width="156" height="35" uuid="a31f3a06-2ea4-4bf5-bcc8-729bb243e956"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[11003]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#;(#,##0.00#-)" isBlankWhenNull="true">
+				<reportElement x="2498" y="0" width="93" height="35" uuid="48074ae3-edb3-4d44-8e3d-b3f77ea98710"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PACKAGE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1693" y="0" width="116" height="35" uuid="44d6e571-145a-4466-9618-2c0d26144211"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STREET}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1809" y="0" width="107" height="35" uuid="722e20de-723e-4656-ad64-c2af46160881"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TUMBON}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1916" y="0" width="107" height="35" uuid="e463df6e-c9a8-4f7d-bf1f-b0b37e6a15cd"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMPURR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2023" y="0" width="107" height="35" uuid="16a39873-322d-44f7-9ba6-4af970584ee6"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVINCE2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1437" y="0" width="131" height="35" uuid="5cda6244-12e2-4cc8-bbd9-5b54c99352f0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOUSENO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1568" y="0" width="125" height="35" uuid="7ec0ff2d-93bc-4fe5-bd2b-909d66afeacb">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VILLAGE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 5.5.2  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCerDoctorHead" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5a900ae6-ad16-4330-ae25-10eab23824a5">
+	<property name="ireport.zoom" value="1.24184264611831"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="253"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB2"/>
+	<parameter name="POAORNO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM(
+SELECT B.UBORNO,A.UAIVNO,
+ SUBSTR(A.UAIVDT,7,2) as Datess
+,SUBSTR(A.UAIVDT,5,2) as Monthss ,  CAST(SUBSTR(A.UAIVDT,1,4)as INT)+543  AS YEARS
+,A.UACUNO,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3) ADDR,SUM(C.MTTRQT*-1) MTTRQT,sum(c.MTCAWE * -1)AS MTCAWE
+,TRIM(CUSTNAMES.OPCUA1)||TRIM(CUSTNAMES.OPCUA2) as OKCUNM,E.OKCUNM AS OKCUNM2,'F'||GGGGG.NODOCUMENT AS NODOCUMENT
+,(SELECT MAX(I.IRYRE1) AS IRYRE1
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,
+     BRLDTA0100.FAR_LOTDATE E,BRLDTA0100.FAR_LQLDUCK01 F,
+     M3FDBPRD.CIDMAS G,M3FDBPRD.CIDADR H,M3FDBPRD.CIDREF I,BRLDTA0100.PRODOCTORAUTO AS GGGGG ,BRLDTA0100.ITEMNRN1 AS ITEMS
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND B.UBORNO = $P{POAORNO}
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+--AND (D.MMITGR BETWEEN 'SH01' AND 'SH07'  OR     D.MMITGR = 'MO00' )
+AND SUBSTR(C.MTBANO,1,7) = E.LOTD_NO
+AND E.LOTD_DATE = SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),0,5) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),6,2) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),9,2)
+AND SUBSTR(C.MTBANO,9,2) = F.LQLI_SLOT
+AND G.IDSUNO = H.SASUNo
+AND G.IDCONO = H.SACONO
+AND H.SASUNO = I.IRSUNO
+AND H.SACONO = I.IRCONO
+AND H.SAADID = 'ADDR'
+AND I.IRRFTY = '35'
+AND G.IDSUNO = F.LQLI_SUPP
+AND G.IDCONO = 10
+AND ITEMS.RNCONO = B.UBCONO
+AND ITEMS.RNITNO = B.UBITNO
+AND G.IDCONO = F.CONOID
+AND B.UBITNO IN ('FFA2100L020','FFGS6001000','FFO1200L020','FFO1400L020','FF003001000','FF004001000','FF005001000','FF006001000'
+,'FF007001000','FF008001000','FF009001000','FF010001000','FF011001000','FF012001000','FF013001000','FF017001000','FF018001000'
+,'FF019001000','FF020001000','FF024000008','FF024001000','FF025000008','FF031001000','FF032001000','FF037001000','FF039001000')
+AND GGGGG.UBORNO=A.UAORNO
+) as IRYRE1
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,
+     M3FDBPRD.OCUSMA E ,M3FDBPRD.OCUSAD AS CUSTNAMES,BRLDTA0100.PRODOCTORAUTO AS GGGGG ,BRLDTA0100.ITEMNRN1 AS ITEMS
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND B.UBORNO = $P{POAORNO}
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+AND A.UACONO = E.OKCONO
+AND CUSTNAMES.OPCUNO=A.UACUNO
+AND CUSTNAMES.OPCONO=A.UACONO
+AND A.UACUNO = E.OKCUNO
+AND GGGGG.UBORNO=A.UAORNO
+AND ITEMS.RNCONO = B.UBCONO
+AND ITEMS.RNITNO = B.UBITNO
+AND B.UBDLIX=C.MTRIDI
+AND B.UBPONR=C.MTRIDL
+AND A.UADLIX=C.MTRIDI
+AND B.UBITNO IN ('FFA2100L020','FFGS6001000','FFO1200L020','FFO1400L020','FF003001000','FF004001000','FF005001000','FF006001000'
+,'FF007001000','FF008001000','FF009001000','FF010001000','FF011001000','FF012001000','FF013001000','FF017001000','FF018001000'
+,'FF019001000','FF020001000','FF024000008','FF024001000','FF025000008','FF031001000','FF032001000','FF037001000','FF039001000')
+GROUP BY B.UBORNO,A.UAIVNO,A.UAIVDT,A.UACUNO,E.OKCUNM,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3)
+,GGGGG.NODOCUMENT,CUSTNAMES.OPCUA1,CUSTNAMES.OPCUA2,OKCUA3,OKCUA1,OKCUA2
+ORDER BY MTTRQT ASC
+--GROUP BY A.UBORNO
+) AS INFORMATION
+LEFT JOIN
+--LOTDATE AND LOT BELOW
+(
+SELECT LEFT(A.LOT, LENGTH(A.LOT) - 1) AS lot,LEFT(B.LOTDATE, LENGTH(B.LOTDATE) - 1) AS lotdate,A.UBORNO FROM(
+ SELECT  XMLSERIALIZE(XMLAGG(XMLTEXT(A.MSLOT || ',')) AS VARCHAR(100)) AS LOT,A.UBORNO
+FROM (
+SELECT DISTINCT SUBSTR(C.MTBANO,1,7) MSLOT,B.UBORNO 
+,'F' || GGGGG.NODOCUMENT AS NODOCUMENT
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B, M3FDBPRD.MITTRA C, M3FDBPRD.MITMAS D,BRLDTA0100.FAR_LOTDATE E,BRLDTA0100.PRODOCTORAUTO AS GGGGG
+,BRLDTA0100.PRODOCTOREST14 AS ffff
+,BRLDTA0100.ITEMNRN1 AS ITEMS
+WHERE A.UACONO = 10
+AND A.UACONO = B.UBCONO
+AND A.UAORNO = B.UBORNO
+AND B.UBORNO = $P{POAORNO}
+AND B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND B.UBITNO = C.MTITNO
+AND C.MTTTYP = 31
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+--AND SUBSTR(C.MTBANO,1,7) = E.LOTD_NO
+AND E.CONOID = A.UACONO
+AND A.UADLDT = E.LOTD_DATE
+AND A.UAIVDT BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+AND ITEMS.RNCONO = B.UBCONO
+AND ITEMS.RNITNO = B.UBITNO
+AND GGGGG.UBORNO=A.UAORNO
+AND B.UBITNO IN ('FFA2100L020','FFGS6001000','FFO1200L020','FFO1400L020','FF003001000','FF004001000','FF005001000','FF006001000'
+,'FF007001000','FF008001000','FF009001000','FF010001000','FF011001000','FF012001000','FF013001000','FF017001000','FF018001000'
+,'FF019001000','FF020001000','FF024000008','FF024001000','FF025000008','FF031001000','FF032001000','FF037001000','FF039001000')
+)  AS a
+GROUP BY A.UBORNO) AS A
+--ABOVE IS FIRST QUERY FOR CONCATTED LOT
+LEFT JOIN
+(
+SELECT  XMLSERIALIZE(XMLAGG(XMLTEXT(LOTD_DATE || ',')) AS VARCHAR(100)) AS LOTDATE,B.UBORNO
+FROM
+(
+SELECT DISTINCT B.UBORNO
+,'F' || GGGGG.NODOCUMENT AS NODOCUMENT,
+(SUBSTR(E.LOTD_DATE,7,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,5,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,1,4)) AS LOTD_DATE
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B, M3FDBPRD.MITTRA C, M3FDBPRD.MITMAS D,BRLDTA0100.FAR_LOTDATE E,BRLDTA0100.PRODOCTORAUTO AS GGGGG
+,BRLDTA0100.PRODOCTOREST14 AS ffff
+,BRLDTA0100.ITEMNRN1 AS ITEMS
+WHERE A.UACONO = 10
+AND A.UACONO = B.UBCONO
+AND A.UAORNO = B.UBORNO
+AND B.UBORNO = $P{POAORNO}
+AND B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND B.UBITNO = C.MTITNO
+AND C.MTTTYP = 31
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+--AND SUBSTR(C.MTBANO,1,7) = E.LOTD_NO
+AND E.CONOID = A.UACONO
+AND A.UADLDT = E.LOTD_DATE
+AND A.UAIVDT BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+AND ITEMS.RNCONO = B.UBCONO
+AND ITEMS.RNITNO = B.UBITNO
+AND GGGGG.UBORNO=A.UAORNO
+AND B.UBITNO IN ('FFA2100L020','FFGS6001000','FFO1200L020','FFO1400L020','FF003001000','FF004001000','FF005001000','FF006001000'
+,'FF007001000','FF008001000','FF009001000','FF010001000','FF011001000','FF012001000','FF013001000','FF017001000','FF018001000'
+,'FF019001000','FF020001000','FF024000008','FF024001000','FF025000008','FF031001000','FF032001000','FF037001000','FF039001000')
+) AS B
+GROUP BY B.UBORNO  
+) AS B
+ON A.UBORNO = B.UBORNO
+--THIS IS FOR CONCATT DATE
+) AS LOTANDLOTDATE
+ON LOTANDLOTDATE.UBORNO = INFORMATION.UBORNO]]>
+	</queryString>
+	<field name="UBORNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBORNO"/>
+	</field>
+	<field name="UAIVNO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UAIVNO"/>
+	</field>
+	<field name="DATESS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATESS"/>
+	</field>
+	<field name="MONTHSS" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MONTHSS"/>
+	</field>
+	<field name="YEARS" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="YEARS"/>
+	</field>
+	<field name="UACUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UACUNO"/>
+	</field>
+	<field name="ADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
+	</field>
+	<field name="MTTRQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="MTTRQT"/>
+	</field>
+	<field name="MTCAWE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="MTCAWE"/>
+	</field>
+	<field name="OKCUNM" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUNM"/>
+	</field>
+	<field name="OKCUNM2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OKCUNM2"/>
+	</field>
+	<field name="NODOCUMENT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NODOCUMENT"/>
+	</field>
+	<field name="IRYRE1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IRYRE1"/>
+	</field>
+	<field name="LOT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LOT"/>
+	</field>
+	<field name="LOTDATE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="LOTDATE"/>
+	</field>
+	<field name="COLUMN_16" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBORNO"/>
+	</field>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="807" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement x="326" y="445" width="100" height="20" uuid="a167e865-fe79-496b-aea3-217daababa9d"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MTTRQT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+				<reportElement x="322" y="429" width="100" height="20" uuid="5f278976-bedd-471f-b21d-fcd28af17352"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MTCAWE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="253" y="428" width="14" height="26" uuid="f868e664-15c8-4dbc-94b3-434735471424">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="253" y="444" width="14" height="26" uuid="d0676ec6-07c7-4cff-8c5c-e7b767d27bf1">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[/]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="385" y="203" width="44" height="20" uuid="80733266-9ac9-4ad6-b3ff-15f890bf7b67">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATESS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="203" width="55" height="20" uuid="701aeb90-fcaa-47b1-bfaf-af497df36da2">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTHSS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="504" y="203" width="77" height="20" uuid="472334c6-ea3f-479d-947c-eaa26f90bbdf">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{YEARS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="453" y="97" width="109" height="20" uuid="0598a4ca-bb81-434c-9995-9d583139cd5e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NODOCUMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="482" width="480" height="20" uuid="05dbcf75-3838-4d0f-a8e0-9e27176f40cd">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="409" width="348" height="20" uuid="28a9c38d-ac1b-4413-b374-39a788c47c36"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTDATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
