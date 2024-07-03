@@ -19,7 +19,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT A.UBORNO, A.OPCUNO, A.UBCONO, A.REPORT, A.DATERN1, A.DATESS, A.MONTHSS, A.YEARS
-, A.OKCUNM2, A.MTTRQT, A.MTCAWE, A.NODOCTOR,A.DNAME, A.NODOCUMENT,DOCTOR2.NOASSISTANT,DOCTOR2.ANAME, A.ITEMS,NEWADDRESS.HOUSENO
+, A.OKCUNM2, A.MTTRQT, A.MTCAWE, A.NODOCTOR,A.DNAME, A.NODOCUMENT, A.ITEMS,NEWADDRESS.HOUSENO
 , NEWADDRESS.VILLAGE,NEWADDRESS.STREET, NEWADDRESS.TUMBON, NEWADDRESS.AMPURR
 ,COALESCE(B.PROVINCE,NEWADDRESS.PROVINCE1) AS PROVINCE2,C.PACKAGE
 FROM
@@ -124,7 +124,7 @@ AND jv.ctstky = CUSTNAMES.OPECAR
 AND jv.ctstco ='ECAR' 
 AND a.UAORNO NOT IN (SELECT UBORNO FROM BRLDTA0100.PRODOCTORAUTO) 
 AND a.UAORNO NOT IN (SELECT INORNO FROM BRLDTA0100.INVCNRN1)
-GROUP BY UBORNO,OKCUNO,UBCONO,UAIVDT,OPCUA1,OPCUA2,OPCUA3,OPCUA4,OPTOWN,CTTX40,OKCUNM,OKCUA1,OKCUA2,OKCUA3,UBITNO,ffff.NODOCTOR,ffff.DNAME   
+GROUP BY UBORNO,OKCUNO,UBCONO,UAIVDT,OPCUA1,OPCUA2,OPCUA3,OPCUA4,OPTOWN,CTTX40,OKCUNM,OKCUA1,OKCUA2,OKCUA3,UBITNO,ffff.NODOCTOR,ffff.DNAME            
 ORDER BY UBORNO,UBITNO) AS A
 LEFT JOIN
 BRLDTA0100.POSTCODEPROVINCE B
@@ -192,10 +192,6 @@ END AS PROVINCE1
 FROM BRLDTA0100.ADDRRN1 AS NEWADDRESS
 LEFT JOIN BRLDTA0100.SAL_CARORD b
 ON B.CARO_CARNO = NEWADDRESS.RNTKNO)AS NEWADDRESS ON NEWADDRESS.CARO_ORNO = A.UBORNO
-LEFT JOIN(
-SELECT NOASSISTANT,ANAME,STARTDATE,ENDDATE FROM BRLDTA0100.DOCTORASSISTANT
-)  DOCTOR2
-ON A.YEARS||A.MONTHSS||A.DATESS BETWEEN DOCTOR2.STARTDATE AND DOCTOR2.ENDDATE
 WHERE OKCUNM2 NOT LIKE '%เงินสด%'
 ORDER BY DATERN1]]>
 	</queryString>
@@ -251,12 +247,6 @@ ORDER BY DATERN1]]>
 		<property name="com.jaspersoft.studio.field.label" value="NODOCUMENT"/>
 		<property name="com.jaspersoft.studio.field.name" value="NODOCUMENT"/>
 	</field>
-	<field name="NOASSISTANT" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="NOASSISTANT"/>
-	</field>
-	<field name="ANAME" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="ANAME"/>
-	</field>
 	<field name="ITEMS" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="ITEMS"/>
 	</field>
@@ -284,6 +274,9 @@ ORDER BY DATERN1]]>
 	<sortField name="DATERN1"/>
 	<sortField name="REPORT"/>
 	<sortField name="NODOCUMENT"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
 	<title>
 		<band height="46">
 			<staticText>
@@ -665,6 +658,34 @@ ORDER BY DATERN1]]>
 				<textFieldExpression><![CDATA[$F{OKCUNM2}]]></textFieldExpression>
 			</textField>
 			<staticText>
+				<reportElement x="275" y="0" width="140" height="35" uuid="1fab051b-ef24-4ba1-b1b4-8414db609bb8"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="0" width="135" height="35" uuid="f96db571-c8f3-40a2-bd5a-001eb16fae1f"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
 				<reportElement x="550" y="0" width="140" height="35" uuid="5eb459e2-6cfe-487a-a396-3eb5f5cdd8ac"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -902,26 +923,6 @@ ORDER BY DATERN1]]>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{UBORNO}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="275" y="0" width="140" height="35" uuid="1004fa4e-7eb5-40af-ae8d-5fdd57fb1861"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{ANAME}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="415" y="0" width="135" height="35" uuid="668c10b1-55c3-4b04-a5f9-70fab3c0baa6"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{NOASSISTANT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
