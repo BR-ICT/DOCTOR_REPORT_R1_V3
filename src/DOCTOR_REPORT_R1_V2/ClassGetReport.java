@@ -291,15 +291,22 @@ public class ClassGetReport {
             parameterss3.put("PYearNumber", Years);
 //            parameterss3.put("PMonthName", GetMonthName(Month));
 //            JasperPrint print2 = JasperFillManager.fillReport(name, parameterss2, conn);
-            JasperPrint print3 = JasperFillManager.fillReport(name2, parameterss3, conn);
+
+            try {
+                JasperPrint print3 = JasperFillManager.fillReport(name2, parameterss3, conn);
 //           JasperPrint print4 = JasperFillManager.fillReport(name3, parameterss2, conn);
 
 //            JasperViewer view2 = new JasperViewer(print2, false);
-            JasperViewer view3 = new JasperViewer(print3, false);
+                JasperViewer view3 = new JasperViewer(print3, false);
 //            JasperViewer view4 = new JasperViewer(print4, false);
 //            view2.setVisible(true);
-            view3.setVisible(true);
+                view3.setVisible(true);
 //            view4.setVisible(true);
+            } catch (JRException ex) {
+                ex.printStackTrace();
+//                return getErrorJRPrint(ex);
+                JOptionPane.showMessageDialog(null, ex);
+            }
 
         } catch (Exception e) {
             System.out.println(e);
