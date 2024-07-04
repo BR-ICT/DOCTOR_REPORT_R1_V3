@@ -18,8 +18,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT A.*,b.PACKAGE,rnno.NODOCUMENT
+		<![CDATA[SELECT A.*,b.PACKAGE,COALESCE(rnno.NODOCUMENT,'') as NODOCUMENT,Docassist.NOASSISTANT,Docassist.ANAME
 FROM (SELECT A.Sav_no,'1' as reporttype,YEAR(PRINT_TIME) as YEARSS,MONTH(PRINT_TIME) as MONTHSS, DAY(PRINT_TIME) as DAYSS,CONVERT(varchar, PRINT_TIME, 103) as FormattedDate
+,PRINT_TIME
 ,DAY(Close_time) as Dates
 ,MONTH(Close_time) as Months
 ,  YEAR(Close_time)  AS YEARS
@@ -72,7 +73,16 @@ GROUP BY Sav_no) b
 ON b.SAV_NO = a.Sav_no
 LEFT JOIN
 (Select NOLINES, UBORNO, NODOCUMENT FROM master.dbo.PRODOCTORAUTO_THAIMAX) as rnno
-on rnno.uborno = a.Sav_no]]>
+on rnno.uborno = a.Sav_no
+LEFT JOIN 
+(SELECT * from master.dbo.V_DOCTORASSISTANT) as Docassist
+ON CONVERT(varchar, PRINT_TIME, 112) BETWEEN  Docassist.STARTDATE and Docassist.ENDDATE
+
+
+SELECT * FROM master.dbo.PRODOCTOREST14 ffff
+
+
+select * from dbo.V_DOCTORASSISTANT]]>
 	</queryString>
 	<field name="Sav_no" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="Sav_no"/>
@@ -91,6 +101,9 @@ on rnno.uborno = a.Sav_no]]>
 	</field>
 	<field name="FormattedDate" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="FormattedDate"/>
+	</field>
+	<field name="PRINT_TIME" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="PRINT_TIME"/>
 	</field>
 	<field name="Dates" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="Dates"/>
@@ -149,6 +162,12 @@ on rnno.uborno = a.Sav_no]]>
 	</field>
 	<field name="NODOCUMENT" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="NODOCUMENT"/>
+	</field>
+	<field name="NOASSISTANT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOASSISTANT"/>
+	</field>
+	<field name="ANAME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ANAME"/>
 	</field>
 	<sortField name="FormattedDate"/>
 	<title>
@@ -494,26 +513,6 @@ on rnno.uborno = a.Sav_no]]>
 	<detail>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="275" y="0" width="140" height="35" uuid="1fab051b-ef24-4ba1-b1b4-8414db609bb8"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="415" y="0" width="135" height="35" uuid="f96db571-c8f3-40a2-bd5a-001eb16fae1f"/>
-				<box>
-					<pen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="550" y="0" width="140" height="35" uuid="5eb459e2-6cfe-487a-a396-3eb5f5cdd8ac"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -729,6 +728,26 @@ on rnno.uborno = a.Sav_no]]>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="275" y="0" width="140" height="35" uuid="3ebb9d5e-4c40-4588-974a-0fe8c4db7fba"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="415" y="0" width="135" height="35" uuid="ac477d9a-2f03-4a9e-b975-2a654e3a3af7"/>
+				<box>
+					<pen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOASSISTANT}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
