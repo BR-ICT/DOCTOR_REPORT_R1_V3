@@ -182,11 +182,12 @@
     <Component class="javax.swing.JComboBox" name="cbm_programe">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
+          <StringArray count="5">
             <StringItem index="0" value="Normal"/>
             <StringItem index="1" value="Local Sale"/>
-            <StringItem index="2" value="Doctor Rpt Summary - Normal"/>
-            <StringItem index="3" value="Doctor Rpt Summary - Transfer"/>
+            <StringItem index="2" value="Halal"/>
+            <StringItem index="3" value="Doctor Rpt Summary - Normal"/>
+            <StringItem index="4" value="Doctor Rpt Summary - Transfer"/>
           </StringArray>
         </Property>
       </Properties>

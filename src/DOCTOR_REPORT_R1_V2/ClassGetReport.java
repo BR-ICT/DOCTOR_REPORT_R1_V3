@@ -344,6 +344,36 @@ public class ClassGetReport {
             System.out.println(e);
         }
     }
+        public void GetReportHalal(String conum) {
+        // TODO add your handling code here:
+        String PathFile = System.getProperty("user.dir").toString() + "\\Report\\";
+//        String name = PathFile + "SummaryDoctorMonthExcell.jasper";
+//        String name = PathFile + "rptSummaryDoctorMonthXLSX.jasper";
+        String name2 = PathFile + "rptHalal.jasper";
+//        String name3 = PathFile + "rptSummaryDoctorMonthXLSX_farmpra.jasper";
+
+        try {
+
+            Connection conn = ConnectDB2.ConnectionDB();
+
+            Map parameterss2 = new HashMap();
+            parameterss2.put("POAORNO", conum);
+            parameterss2.put("imgurl", PathFile);
+//            JasperPrint print2 = JasperFillManager.fillReport(name, parameterss2, conn);
+            JasperPrint print3 = JasperFillManager.fillReport(name2, parameterss2, conn);
+//           JasperPrint print4 = JasperFillManager.fillReport(name3, parameterss2, conn);
+
+//            JasperViewer view2 = new JasperViewer(print2, false);
+            JasperViewer view3 = new JasperViewer(print3, false);
+//            JasperViewer view4 = new JasperViewer(print4, false);
+//            view2.setVisible(true);
+            view3.setVisible(true);
+//            view4.setVisible(true);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public void GetReportDoctorSummaryExcelFishFarmData(String Years, String Month) {
         // TODO add your handling code here:

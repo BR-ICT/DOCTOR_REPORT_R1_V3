@@ -170,6 +170,7 @@ select * from dbo.V_DOCTORASSISTANT]]>
 		<property name="com.jaspersoft.studio.field.label" value="ANAME"/>
 	</field>
 	<sortField name="FormattedDate"/>
+	<sortField name="Sav_no"/>
 	<title>
 		<band height="46">
 			<staticText>

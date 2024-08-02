@@ -136,7 +136,7 @@ public class LoginMain extends javax.swing.JFrame {
         getContentPane().add(CmbCompany);
         CmbCompany.setBounds(140, 160, 200, 30);
 
-        cbm_programe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Local Sale", "Doctor Rpt Summary - Normal", "Doctor Rpt Summary - Transfer" }));
+        cbm_programe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Local Sale", "Halal", "Doctor Rpt Summary - Normal", "Doctor Rpt Summary - Transfer" }));
         getContentPane().add(cbm_programe);
         cbm_programe.setBounds(140, 240, 200, 30);
 
@@ -244,6 +244,10 @@ public class LoginMain extends javax.swing.JFrame {
                     ReportTHAIMAXnew rpsnew = new ReportTHAIMAXnew();
                     ProgramName = "THAIMAXnew";
                     rpsnew.setVisible(true);
+                } else if (ReportN.equalsIgnoreCase("Halal")) {
+                    ReportHalal halal = new ReportHalal();
+                    ProgramName = "Halal";
+                    halal.setVisible(true);
                 } else if (ReportN.equalsIgnoreCase("Fish Farm")) {
                     ReportFarmPra rpf = new ReportFarmPra();
                     ProgramName = "Farm";
@@ -265,7 +269,6 @@ public class LoginMain extends javax.swing.JFrame {
                     ReportDoctorSummaryTransfer rps = new ReportDoctorSummaryTransfer();
                     rps.setVisible(true);
                 }
-                
 
             }
 
@@ -292,6 +295,7 @@ public class LoginMain extends javax.swing.JFrame {
         if (selecteditem.equals("Normal/Local Sale")) {
             cbm_programe.addItem("Normal");
             cbm_programe.addItem("Local Sale");
+            cbm_programe.addItem("Halal");
             cbm_programe.addItem("Doctor Rpt Summary - Normal");
             cbm_programe.addItem("Doctor Rpt Summary - Transfer");
         } else if (selecteditem.equals("Fish Farm")) {
