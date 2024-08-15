@@ -316,10 +316,10 @@ AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="226" splitType="Immediate">
+		<band height="266" splitType="Immediate">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="131" y="154" width="140" height="72" uuid="4b304380-81fa-4ed6-93b9-d6479fee5cfd"/>
+				<reportElement x="131" y="169" width="140" height="72" uuid="4b304380-81fa-4ed6-93b9-d6479fee5cfd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -329,7 +329,7 @@ Halal Slaughtering Supervisor
 ........./........../.............]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="351" y="154" width="140" height="72" uuid="cb050dda-d9d8-4ecf-85d1-56a76d3f93ee"/>
+				<reportElement x="351" y="169" width="140" height="72" uuid="cb050dda-d9d8-4ecf-85d1-56a76d3f93ee"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -352,7 +352,7 @@ Halal Slaughtering Supervisor
 				<text><![CDATA[Sub Lot. No. .................................................................................................................................................................................................]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="41" y="70" width="510" height="20" uuid="e6d5b124-adc0-45df-be03-de33ee89cb87">
+				<reportElement x="41" y="85" width="510" height="20" uuid="e6d5b124-adc0-45df-be03-de33ee89cb87">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -380,7 +380,7 @@ Halal Slaughtering Supervisor
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="41" y="90" width="510" height="20" uuid="e10278c5-6a95-4abb-bfbe-3e9bba0c3bd5">
+				<reportElement x="41" y="105" width="510" height="20" uuid="e10278c5-6a95-4abb-bfbe-3e9bba0c3bd5">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<box>
@@ -409,7 +409,7 @@ Halal Slaughtering Supervisor
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="289" y="110" width="262" height="20" uuid="0a0ee138-d284-4335-8816-4e6d37734ca4">
+				<reportElement x="289" y="125" width="262" height="20" uuid="0a0ee138-d284-4335-8816-4e6d37734ca4">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -430,7 +430,7 @@ Halal Slaughtering Supervisor
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="41" y="110" width="248" height="20" uuid="a73d06e3-af4d-4bdf-a468-6f70ecb0ed4d">
+				<reportElement x="41" y="125" width="248" height="20" uuid="a73d06e3-af4d-4bdf-a468-6f70ecb0ed4d">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
@@ -472,6 +472,13 @@ Halal Slaughtering Supervisor
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SUBLOTNO}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="41" y="64" width="100" height="20" uuid="a216bd88-8969-4ec1-bd42-251791ce4b44"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="16"/>
+				</textElement>
+				<text><![CDATA[  ส่งมอบให้ลูกค้า : ]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>
