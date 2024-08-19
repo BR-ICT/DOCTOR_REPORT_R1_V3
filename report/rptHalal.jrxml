@@ -20,9 +20,9 @@
 	</parameter>
 	<parameter name="imgurl" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT ROW_NUMBER() OVER (PARTITION BY h.UAIVNO  ) as seqnums,h.*
+		<![CDATA[SELECT ROW_NUMBER() OVER (PARTITION BY h.UAIVNO  ) as seqnums,h.*,location.OKCUNM2,location.ADDR
 FROM (
-SELECT DISTINCT A.UAIVNO,A.UAIVDT,B.UBITNO,D.MMFUDS,SUBSTR(C.MTBANO,1,7) ||'  ' || SUBSTR(C.MTBANO,9,2) MSLOT,
+SELECT DISTINCT A.UAIVNO,B.UBORNO ,A.UAIVDT,B.UBITNO,D.MMFUDS,SUBSTR(C.MTBANO,1,7) ||'  ' || SUBSTR(C.MTBANO,9,2) MSLOT,
 SUBSTR(C.MTBANO,1,7)  LOTNO , SUBSTR(C.MTBANO,9,2) SUBLOTNO,
 (SUBSTR(E.LOTD_DATE,7,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,5,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,1,4))  AS LOTD_DATE
 ,I.IRYRE1,G.IDSUNO,G.IDSUNM,
@@ -63,15 +63,59 @@ AND G.IDCONO = 10
 AND SUBSTRING(B.UBITNO,1,5) != 'RA015'
 AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
 --AND GGGGG.UBORNO=A.UAORNO
-) as h]]>
+) as h
+LEFT JOIN
+(SELECT B.UBORNO,A.UAIVNO,
+ SUBSTR(A.UAIVDT,7,2) as Datess
+,SUBSTR(A.UAIVDT,5,2) as Monthss ,  CAST(SUBSTR(A.UAIVDT,1,4)as INT)+543  AS YEARS
+,A.UACUNO,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3) ADDR,SUM(C.MTTRQT*-1) MTTRQT,sum(c.MTCAWE * -1)AS MTCAWE
+--,ffff.NODOCTOR,ffff.DNAME
+--,GGGGG.NODOCUMENT
+,TRIM(CUSTNAMES.OPCUA1)||' '||TRIM(CUSTNAMES.OPCUA2)||' '||TRIM(CUSTNAMES.OPCUA3) as OKCUNM,E.OKCUNM AS OKCUNM2
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,
+     M3FDBPRD.OCUSMA E 
+--     , brldta0100.PRODOCTOREST14 AS ffff 
+--     ,BRLDTA0100.PRODOCTORAUTO AS GGGGG
+     ,M3FDBPRD.OCUSAD AS CUSTNAMES
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND B.UBORNO = $P{POAORNO}
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+AND (D.MMITGR BETWEEN 'SH01' AND 'SH07'  OR     D.MMITGR = 'MO00')
+AND A.UACONO = E.OKCONO
+AND CUSTNAMES.OPCUNO=A.UACUNO
+AND CUSTNAMES.OPCONO = A.UACONO
+AND A.UACUNO = E.OKCUNO
+--AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+--AND GGGGG.UBORNO=A.UAORNO
+AND ((UACUNO <> 'TH61050028' AND OPADID = 'DELI01') OR (UACUNO = 'TH61050028'))
+AND B.UBDLIX=C.MTRIDI
+AND B.UBPONR=C.MTRIDL
+AND A.UADLIX=C.MTRIDI
+--AND ((CUSTNAMES.OPCUNO <> 'TH61050028') OR (CUSTNAMES.OPCUNO = 'TH61050028' AND CUSTNAMES.OPADID = 'TNAME'))
+GROUP BY B.UBORNO,A.UAIVNO,A.UAIVDT,A.UACUNO,E.OKCUNM,RTRIM(E.OKCUA1)||' '||RTRIM(E.OKCUA2)||' '||RTRIM(E.OKCUA3)
+--,ffff.NODOCTOR,ffff.DNAME
+--,GGGGG.NODOCUMENT
+,CUSTNAMES.OPCUA1,CUSTNAMES.OPCUA2,CUSTNAMES.OPCUA3) AS location
+ON location.UBORNO = h.UBORNO]]>
 	</queryString>
-	<field name="SEQNUMS" class="java.lang.String">
+	<field name="SEQNUMS" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="SEQNUMS"/>
 		<property name="com.jaspersoft.studio.field.label" value="SEQNUMS"/>
 	</field>
 	<field name="UAIVNO" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="UAIVNO"/>
 		<property name="com.jaspersoft.studio.field.label" value="UAIVNO"/>
+	</field>
+	<field name="UBORNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="UBORNO"/>
+		<property name="com.jaspersoft.studio.field.label" value="UBORNO"/>
 	</field>
 	<field name="UAIVD00001" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="UAIVD00001"/>
@@ -144,6 +188,14 @@ AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
 	<field name="WEIGHT" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.name" value="WEIGHT"/>
 		<property name="com.jaspersoft.studio.field.label" value="WEIGHT"/>
+	</field>
+	<field name="OKCUNM2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="OKCUNM2"/>
+		<property name="com.jaspersoft.studio.field.label" value="OKCUNM2"/>
+	</field>
+	<field name="COLUMN_23" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -319,7 +371,9 @@ AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
 		<band height="266" splitType="Immediate">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
-				<reportElement x="131" y="169" width="140" height="72" uuid="4b304380-81fa-4ed6-93b9-d6479fee5cfd"/>
+				<reportElement x="351" y="169" width="140" height="72" uuid="4b304380-81fa-4ed6-93b9-d6479fee5cfd">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
@@ -329,13 +383,16 @@ Halal Slaughtering Supervisor
 ........./........../.............]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="351" y="169" width="140" height="72" uuid="cb050dda-d9d8-4ecf-85d1-56a76d3f93ee"/>
+				<reportElement x="130" y="169" width="140" height="72" uuid="cb050dda-d9d8-4ecf-85d1-56a76d3f93ee">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<text><![CDATA[.............................................
 (............................................)
-(ผู้อนุมัติ........../......../..............)]]></text>
+ผู้แทนสถานประกอบการ
+........../......../..............]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="41" y="10" width="554" height="20" forecolor="#050000" uuid="36785048-2097-414f-b1ee-c4ac729345a7"/>
@@ -372,11 +429,11 @@ Halal Slaughtering Supervisor
 					<text><![CDATA[  บริษัท :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="49" y="0" width="460" height="20" uuid="a3c4a3c4-7430-435b-aeec-d5748683054b"/>
+					<reportElement x="49" y="0" width="461" height="20" uuid="b4169d04-fddd-4b16-8230-c17a1b3b751d"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{IDSUNM}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{OKCUNM2}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -401,7 +458,7 @@ Halal Slaughtering Supervisor
 					<text><![CDATA[  ที่อยู่ : ]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="49" y="0" width="461" height="20" uuid="90ddb9d8-a6f7-44a4-8ceb-a19d6e421eb9"/>
+					<reportElement x="40" y="0" width="470" height="20" uuid="093e38f8-b80f-46e4-be38-d0e633451ce6"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
