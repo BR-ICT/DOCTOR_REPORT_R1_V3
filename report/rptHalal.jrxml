@@ -20,7 +20,7 @@
 	</parameter>
 	<parameter name="imgurl" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT ROW_NUMBER() OVER (PARTITION BY h.UAIVNO  ) as seqnums,h.*,location.OKCUNM2,location.ADDR
+		<![CDATA[SELECT ROW_NUMBER() OVER (PARTITION BY h.UAIVNO  ) as seqnums,h.*,location.OKCUNM2,location.ADDR AS CUSADDR
 FROM (
 SELECT DISTINCT A.UAIVNO,B.UBORNO ,A.UAIVDT,B.UBITNO,D.MMFUDS,SUBSTR(C.MTBANO,1,7) ||'  ' || SUBSTR(C.MTBANO,9,2) MSLOT,
 SUBSTR(C.MTBANO,1,7)  LOTNO , SUBSTR(C.MTBANO,9,2) SUBLOTNO,
@@ -193,9 +193,9 @@ ON location.UBORNO = h.UBORNO]]>
 		<property name="com.jaspersoft.studio.field.name" value="OKCUNM2"/>
 		<property name="com.jaspersoft.studio.field.label" value="OKCUNM2"/>
 	</field>
-	<field name="COLUMN_23" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="ADDR"/>
-		<property name="com.jaspersoft.studio.field.label" value="ADDR"/>
+	<field name="CUSADDR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CUSADDR"/>
+		<property name="com.jaspersoft.studio.field.label" value="CUSADDR"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -462,7 +462,7 @@ Halal Slaughtering Supervisor
 					<textElement>
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{ADDR}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{CUSADDR}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -535,6 +535,13 @@ Halal Slaughtering Supervisor
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
 				<text><![CDATA[  ส่งมอบให้ลูกค้า : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="188" width="139" height="30" uuid="dbcd0020-2c31-4a55-9992-6fb9943f486f"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[คุณเมธีร์   เชวงศักดิ์โสภาคย์]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
