@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCerDoctorHead" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5a900ae6-ad16-4330-ae25-10eab23824a5">
+	<property name="ireport.zoom" value="1.24184264611831"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="253"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DB2"/>
+	<parameter name="POAORNO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Docname" class="java.lang.String"/>
+	<parameter name="Doccode" class="java.lang.String"/>
+	<parameter name="POAORNOMULTI" class="java.util.Collection"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM M3FDBPRD.ODLINE B
+WHere $X{IN, B.UBORNO ,  POAORNOMULTI }]]>
+	</queryString>
+	<field name="UBCONO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBCONO"/>
+	</field>
+	<field name="UBDIVI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIVI"/>
+	</field>
+	<field name="UBORNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBORNO"/>
+	</field>
+	<field name="UBPONR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPONR"/>
+	</field>
+	<field name="UBPOSX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPOSX"/>
+	</field>
+	<field name="UBDLIX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDLIX"/>
+	</field>
+	<field name="UBFACI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBFACI"/>
+	</field>
+	<field name="UBWHLO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBWHLO"/>
+	</field>
+	<field name="UBLTYP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBLTYP"/>
+	</field>
+	<field name="UBITNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBITNO"/>
+	</field>
+	<field name="UBDLQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDLQT"/>
+	</field>
+	<field name="UBDLQA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDLQA"/>
+	</field>
+	<field name="UBDLQS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDLQS"/>
+	</field>
+	<field name="UBIVQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBIVQT"/>
+	</field>
+	<field name="UBIVQA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBIVQA"/>
+	</field>
+	<field name="UBIVQS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBIVQS"/>
+	</field>
+	<field name="UBCHQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBCHQT"/>
+	</field>
+	<field name="UBSAPR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBSAPR"/>
+	</field>
+	<field name="UBNEPR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBNEPR"/>
+	</field>
+	<field name="UBSACD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBSACD"/>
+	</field>
+	<field name="UBPRMO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBPRMO"/>
+	</field>
+	<field name="UBDIC1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC1"/>
+	</field>
+	<field name="UBDIC2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC2"/>
+	</field>
+	<field name="UBDIC3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC3"/>
+	</field>
+	<field name="UBDIC4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC4"/>
+	</field>
+	<field name="UBDIC5" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC5"/>
+	</field>
+	<field name="UBDIC6" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIC6"/>
+	</field>
+	<field name="UBDIP1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP1"/>
+	</field>
+	<field name="UBDIP2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP2"/>
+	</field>
+	<field name="UBDIP3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP3"/>
+	</field>
+	<field name="UBDIP4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP4"/>
+	</field>
+	<field name="UBDIP5" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP5"/>
+	</field>
+	<field name="UBDIP6" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIP6"/>
+	</field>
+	<field name="UBDIA1" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA1"/>
+	</field>
+	<field name="UBDIA2" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA2"/>
+	</field>
+	<field name="UBDIA3" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA3"/>
+	</field>
+	<field name="UBDIA4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA4"/>
+	</field>
+	<field name="UBDIA5" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA5"/>
+	</field>
+	<field name="UBDIA6" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDIA6"/>
+	</field>
+	<field name="UBLNAM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBLNAM"/>
+	</field>
+	<field name="UBSTCD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBSTCD"/>
+	</field>
+	<field name="UBPRCH" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPRCH"/>
+	</field>
+	<field name="UBUCOS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBUCOS"/>
+	</field>
+	<field name="UBUCCD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBUCCD"/>
+	</field>
+	<field name="UBDCOS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDCOS"/>
+	</field>
+	<field name="UBALUN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBALUN"/>
+	</field>
+	<field name="UBSPUN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBSPUN"/>
+	</field>
+	<field name="UBCMNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBCMNO"/>
+	</field>
+	<field name="UBSUNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBSUNO"/>
+	</field>
+	<field name="UBPRTX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPRTX"/>
+	</field>
+	<field name="UBPOTX" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPOTX"/>
+	</field>
+	<field name="UBDTID" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDTID"/>
+	</field>
+	<field name="UBINPR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBINPR"/>
+	</field>
+	<field name="UBCUCT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBCUCT"/>
+	</field>
+	<field name="UBHDPR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBHDPR"/>
+	</field>
+	<field name="UBIVNO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBIVNO"/>
+	</field>
+	<field name="UBYEA4" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBYEA4"/>
+	</field>
+	<field name="UBCUOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBCUOR"/>
+	</field>
+	<field name="UBPRPR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPRPR"/>
+	</field>
+	<field name="UBPROJ" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBPROJ"/>
+	</field>
+	<field name="UBELNO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBELNO"/>
+	</field>
+	<field name="UBRGDT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBRGDT"/>
+	</field>
+	<field name="UBRGTM" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBRGTM"/>
+	</field>
+	<field name="UBLMDT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBLMDT"/>
+	</field>
+	<field name="UBCHNO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBCHNO"/>
+	</field>
+	<field name="UBCHID" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBCHID"/>
+	</field>
+	<field name="UBRTQA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBRTQA"/>
+	</field>
+	<field name="UBRTQT" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBRTQT"/>
+	</field>
+	<field name="UBAPBA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBAPBA"/>
+	</field>
+	<field name="UBWATP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBWATP"/>
+	</field>
+	<field name="UBGWTP" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBGWTP"/>
+	</field>
+	<field name="UBINPX" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBINPX"/>
+	</field>
+	<field name="UBEXIN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBEXIN"/>
+	</field>
+	<field name="UBPIDE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBPIDE"/>
+	</field>
+	<field name="UBPCLA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBPCLA"/>
+	</field>
+	<field name="UBDECU" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBDECU"/>
+	</field>
+	<field name="UBTEPY" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBTEPY"/>
+	</field>
+	<field name="UBDPCL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBDPCL"/>
+	</field>
+	<field name="UBSCLB" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBSCLB"/>
+	</field>
+	<field name="UBLNCL" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="UBLNCL"/>
+	</field>
+	<field name="UBRAGN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBRAGN"/>
+	</field>
+	<field name="UBCLAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UBCLAT"/>
+	</field>
+	<title>
+		<band height="63">
+			<textField>
+				<reportElement x="108" y="23" width="100" height="30" uuid="fa020950-7643-4306-89a7-154af84178fa"/>
+				<textFieldExpression><![CDATA[$F{UBORNO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="53"/>
+	</detail>
+</jasperReport>

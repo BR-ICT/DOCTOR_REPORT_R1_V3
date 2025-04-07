@@ -835,62 +835,6 @@ ON '0' < DOCTORNAME.DDD]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{PROVINCE1}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="415" y="536" width="50" height="20" uuid="2388c4bd-6022-46ce-bed4-6c4f30b903d6">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{HOUSENO}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="474" y="536" width="40" height="20" uuid="8e1d0171-fe66-4c91-8e2d-6f18ee032602">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{VILLAGE}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="280" y="554" width="100" height="20" uuid="715a10d5-7609-42b2-986e-269efb8a3072">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TUMBON}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="430" y="554" width="99" height="20" uuid="92ff4e9d-f097-4447-9963-992d5ca48206">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{AMPURR}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="149" y="573" width="99" height="20" uuid="09289da1-fbc6-4215-b3dd-bb6aa9214318">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PROVINCE1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="203" y="534" width="161" height="20" uuid="9e07b859-d550-437a-b3ff-043d813386db"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{OKCUNM2}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="114" y="482" width="480" height="20" uuid="05dbcf75-3838-4d0f-a8e0-9e27176f40cd">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -977,16 +921,6 @@ ON '0' < DOCTORNAME.DDD]]>
 				<text><![CDATA[บริษัท บางกอกแร้นซ์ จำกัด (มหาชน)]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="131" y="554" width="100" height="20" uuid="012fe433-32b7-456f-93d9-b06643090df7">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{STREET}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
 				<reportElement x="400" y="500" width="98" height="20" uuid="1d52dd2d-2599-4b42-9359-790dd855d58f">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -1006,6 +940,55 @@ ON '0' < DOCTORNAME.DDD]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{OKCUNM2}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="203" y="534" width="161" height="20" uuid="8d4528af-a44b-427e-8c0d-08b1f8118c06"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[บมจ.บางกอกแร้นซ์]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="536" width="50" height="20" uuid="9d1fe567-8c16-4cfa-ade4-aff4caa6fadc"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[18/1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="474" y="536" width="40" height="20" uuid="12bb8115-e333-4e23-8e5a-8afc81d65c31"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[12]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="131" y="554" width="100" height="20" uuid="35c72729-abb2-4d45-93a8-dafeba75f705"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[สายหลังวัดบางพลีใหญ่ใน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="554" width="100" height="20" uuid="77949b55-1ce8-4548-8951-e461bbad07c9"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[บางพลีใหญ่]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="554" width="98" height="20" uuid="1986a926-8062-4f3d-b0fd-6ca3002e6698"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[บางพลี]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="573" width="99" height="20" uuid="14a2264b-6b42-4c52-befb-3895d6ccf88f"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13"/>
+				</textElement>
+				<text><![CDATA[สมุทรปราการ]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>

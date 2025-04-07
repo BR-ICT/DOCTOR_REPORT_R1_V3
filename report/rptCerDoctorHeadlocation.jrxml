@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 5.5.2  -->
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCerDoctorHead" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5a900ae6-ad16-4330-ae25-10eab23824a5">
 	<property name="ireport.zoom" value="1.366026910730141"/>
 	<property name="ireport.x" value="0"/>
@@ -287,22 +287,6 @@ ON LOTANDLOTDATE.UBORNO = INFORMATION.UBORNO]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MTTRQT}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement x="322" y="429" width="100" height="20" uuid="e6bb2038-8a20-466a-9fb1-136b3257aaeb"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{MTCAWE}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="253" y="428" width="14" height="26" uuid="62a6333e-26f8-4ef0-828d-5a991db9e52b">
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-				</reportElement>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="18" isBold="true"/>
-				</textElement>
-				<text><![CDATA[/]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="253" y="444" width="14" height="26" uuid="fcb0ee34-1f75-4ed7-87d0-6587188649d2">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>

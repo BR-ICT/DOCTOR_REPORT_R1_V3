@@ -21,11 +21,60 @@
 	<parameter name="imgurl" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT ROW_NUMBER() OVER (PARTITION BY h.UAIVNO  ) as seqnums,h.*,location.OKCUNM2,location.ADDR AS CUSADDR
+,
+(SELECT DISTINCT XMLSERIALIZE(XMLAGG(XMLTEXT(SUBSTR(C.MTBANO,1,7) ||'  ' || SUBSTR(C.MTBANO,9,2)  || ',')) AS VARCHAR(100))    
+FROM M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND B.UBCONO = 10
+AND B.UBORNO = $P{POAORNO}) AS LOTCOMBINED,
+(SELECT XMLSERIALIZE(XMLAGG(XMLTEXT(A.LOTD_DATE|| ',')) AS VARCHAR(100))
+FROM
+(SELECT DISTINCT 
+(SUBSTR(E.LOTD_DATE,7,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,5,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,1,4))  AS LOTD_DATE
+FROM M3FDBPRD.ODHEAD A,M3FDBPRD.ODLINE B,M3FDBPRD.MITTRA C,M3FDBPRD.MITMAS D,
+     BRLDTA0100.FAR_LOTDATE E,BRLDTA0100.FAR_LQLDUCK01 F,
+     M3FDBPRD.CIDMAS G,M3FDBPRD.CIDADR H,M3FDBPRD.CIDREF I
+    , brldta0100.PRODOCTOREST14 AS ffff 
+--    ,BRLDTA0100.PRODOCTORAUTO AS GGGGG
+WHERE B.UBORNO = C.MTRIDN
+AND B.UBCONO = C.MTCONO
+AND C.MTTTYP = 31
+AND B.UBITNO = C.MTITNO
+AND A.UAORNO = B.UBORNO
+AND A.UACONO = B.UBCONO
+AND A.UACONO = 10
+AND B.UBORNO = $P{POAORNO}
+AND C.MTCONO = D.MMCONO
+AND C.MTITNO = D.MMITNO
+AND A.UACONO = F.CONOID
+AND (D.MMITGR BETWEEN 'SH01' AND 'SH07'  OR     D.MMITGR = 'MO00')
+AND SUBSTR(C.MTBANO,1,7) = E.LOTD_NO
+AND E.LOTD_DATE = SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),0,5) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),6,2) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),9,2)
+AND SUBSTR(C.MTBANO,9,2) = F.LQLI_SLOT
+--AND G.IDSUNO = H.SASUNO
+--AND G.IDCONO = H.SACONO
+AND H.SASUNO = I.IRSUNO
+AND H.SACONO = I.IRCONO
+AND H.SAADID = 'ADDR'
+AND I.IRRFTY = '35'
+AND H.SASUNO = F.LQLI_SUPP
+--AND G.IDCONO = 10
+AND I.IRCONO = 10
+AND SUBSTRING(B.UBITNO,1,5) != 'RA015'	
+--AND 
+AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
+--AND GGGGG.UBORNO=A.UAORNO
+) A ) AS LOTDDATECOMBINED
 FROM (
 SELECT DISTINCT A.UAIVNO,B.UBORNO ,A.UAIVDT,B.UBITNO,D.MMFUDS,SUBSTR(C.MTBANO,1,7) ||'  ' || SUBSTR(C.MTBANO,9,2) MSLOT,
 SUBSTR(C.MTBANO,1,7)  LOTNO , SUBSTR(C.MTBANO,9,2) SUBLOTNO,
 (SUBSTR(E.LOTD_DATE,7,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,5,2) CONCAT '/' CONCAT SUBSTR(E.LOTD_DATE,1,4))  AS LOTD_DATE
-,I.IRYRE1,G.IDSUNO,G.IDSUNM,
+--,I.IRYRE1
+,
+--G.IDSUNO,G.IDSUNM,
  (SUBSTR(A.UAIVDT,7,2) CONCAT '/' CONCAT SUBSTR(A.UAIVDT,5,2) CONCAT '/' CONCAT SUBSTR(A.UAIVDT,1,4))  AS UAIVDT
 , SUBSTR(A.UAIVDT,7,2) as Datess
 ,SUBSTR(A.UAIVDT,5,2) as Monthss ,  CAST(SUBSTR(A.UAIVDT,1,4)as INT)+543  AS YEARS
@@ -49,18 +98,21 @@ AND B.UBORNO = $P{POAORNO}
 AND C.MTCONO = D.MMCONO
 AND C.MTITNO = D.MMITNO
 AND A.UACONO = F.CONOID
+AND (D.MMITGR BETWEEN 'SH01' AND 'SH07'  OR     D.MMITGR = 'MO00')
 AND SUBSTR(C.MTBANO,1,7) = E.LOTD_NO
 AND E.LOTD_DATE = SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),0,5) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),6,2) || SUBSTRING(CHAR(F.LQLI_SHDATE,ISO),9,2)
 AND SUBSTR(C.MTBANO,9,2) = F.LQLI_SLOT
-AND G.IDSUNO = H.SASUNo
-AND G.IDCONO = H.SACONO
+--AND G.IDSUNO = H.SASUNO
+--AND G.IDCONO = H.SACONO
 AND H.SASUNO = I.IRSUNO
 AND H.SACONO = I.IRCONO
 AND H.SAADID = 'ADDR'
 AND I.IRRFTY = '35'
-AND G.IDSUNO = F.LQLI_SUPP
-AND G.IDCONO = 10
-AND SUBSTRING(B.UBITNO,1,5) != 'RA015'
+AND H.SASUNO = F.LQLI_SUPP
+--AND G.IDCONO = 10
+AND I.IRCONO = 10
+AND SUBSTRING(B.UBITNO,1,5) != 'RA015'	
+--AND 
 AND A.UAIVDT  BETWEEN ffff.STARTDATE AND ffff.ENDDATE
 --AND GGGGG.UBORNO=A.UAORNO
 ) as h
@@ -145,18 +197,6 @@ ON location.UBORNO = h.UBORNO]]>
 		<property name="com.jaspersoft.studio.field.name" value="LOTD_DATE"/>
 		<property name="com.jaspersoft.studio.field.label" value="LOTD_DATE"/>
 	</field>
-	<field name="IRYRE1" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="IRYRE1"/>
-		<property name="com.jaspersoft.studio.field.label" value="IRYRE1"/>
-	</field>
-	<field name="IDSUNO" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="IDSUNO"/>
-		<property name="com.jaspersoft.studio.field.label" value="IDSUNO"/>
-	</field>
-	<field name="IDSUNM" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="IDSUNM"/>
-		<property name="com.jaspersoft.studio.field.label" value="IDSUNM"/>
-	</field>
 	<field name="UAIVDT" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="UAIVDT"/>
 		<property name="com.jaspersoft.studio.field.label" value="UAIVDT"/>
@@ -196,6 +236,14 @@ ON location.UBORNO = h.UBORNO]]>
 	<field name="CUSADDR" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="CUSADDR"/>
 		<property name="com.jaspersoft.studio.field.label" value="CUSADDR"/>
+	</field>
+	<field name="LOTCOMBINED" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LOTCOMBINED"/>
+		<property name="com.jaspersoft.studio.field.label" value="LOTCOMBINED"/>
+	</field>
+	<field name="LOTDDATECOMBINED" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="LOTDDATECOMBINED"/>
+		<property name="com.jaspersoft.studio.field.label" value="LOTDDATECOMBINED"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -308,12 +356,12 @@ ON location.UBORNO = h.UBORNO]]>
 				</textElement>
 				<text><![CDATA[  HALAL. No. 043/2541]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="65" y="100" width="100" height="20" uuid="f64e0ba4-ac84-4725-9d89-3c5f7a452c02"/>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="52" y="100" width="100" height="30" uuid="5d85b942-591c-418f-aae8-549a64a5683c"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{LOTD_DATE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -508,27 +556,6 @@ Halal Slaughtering Supervisor
 					<text><![CDATA[  EST. No.]]></text>
 				</staticText>
 			</frame>
-			<textField>
-				<reportElement x="120" y="10" width="100" height="20" uuid="2a00303e-167b-4aa3-81dd-cb3e75913f9d"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{LOTD_DATE}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="311" y="10" width="100" height="20" uuid="52d58e9a-2712-439f-951a-22e8b6013135"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{LOTNO}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="118" y="30" width="100" height="20" uuid="e8d0ebd2-3300-4ea0-82e5-0f07c1327274"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{SUBLOTNO}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="41" y="64" width="100" height="20" uuid="a216bd88-8969-4ec1-bd42-251791ce4b44"/>
 				<textElement>
@@ -543,6 +570,20 @@ Halal Slaughtering Supervisor
 				</textElement>
 				<text><![CDATA[คุณเมธีร์   เชวงศักดิ์โสภาคย์]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="266" y="10" width="264" height="20" uuid="0aa220a1-0b8d-43be-8ba2-b5da72be23f3"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTCOMBINED}.substring(0 , $F{LOTCOMBINED}.length() -1 )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="-5" width="139" height="30" uuid="8e0c4933-70e8-4463-b438-aaff7591d647"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTDDATECOMBINED}.substring(0 , $F{LOTDDATECOMBINED}.length() -1 )]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>

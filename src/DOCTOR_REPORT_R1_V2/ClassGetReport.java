@@ -1307,6 +1307,58 @@ public class ClassGetReport {
         }
 
     }
+     public void getReportFarmPraMultiple(String CONumber, Integer subyear) {
+        // TODO add your handling code here:
+        File myFile = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "\\farmprareport.pdf");
+        String PathFile = System.getProperty("user.dir").toString() + "\\Report\\";
+        String name = PathFile + "rptCerDoctorHead_FarmPra.jasper";
+        try {
+//          Connection conn = ConnectMsSql.ConnectionDB();
+            Connection conn = ConnectDB2.ConnectionDB();
+            //JRResultSetDataSource resultSetDataSource = new   JRResultSetDataSource(Rs1);
+            /////////////////////////////////////////////////////////ORIGINAL//////////////////////////////////////////////////
+            Map parameterss = new HashMap();
+            parameterss.put("POAORNO", CONumber);
+            JasperPrint print = JasperFillManager.fillReport(name, parameterss, conn);
+            JasperViewer view = new JasperViewer(print, false);
+            view.setVisible(true);
+
+            /////////////////////////////////////////////////////////COPY 1//////////////////////////////////////////////////
+            String name2 = PathFile + "rptCerFishFarm.jasper";
+            Map parameterss2 = new HashMap();
+//          parameterss2.put("ThaiBaht",sumThaiBaht);
+            parameterss2.put("POAORNO", CONumber);
+            parameterss2.put("year", subyear);
+            JasperPrint print2 = JasperFillManager.fillReport(name2, parameterss2, conn);
+
+            JasperViewer view2 = new JasperViewer(print2, false);
+            view2.setVisible(true);
+//          export pdf file for farmpra
+            jasperPrints.add(print);
+            jasperPrints.add(print2);
+            exporter.setExporterInput(SimpleExporterInput.getInstance(jasperPrints));
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(myFile));
+            SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
+            configuration.setPermissions(PdfWriter.AllowCopy | PdfWriter.AllowPrinting);
+            exporter.setConfiguration(configuration);
+            exporter.exportReport();
+            //เปิดไฟล์เมื่อ render เสร็จ
+//            if (Desktop.isDesktopSupported()) {
+//                try {
+//                    Desktop.getDesktop().open(myFile);
+//                    System.out.println(myFile);
+//                } catch (Exception e) {
+//                    JOptionPane.showMessageDialog(null, e);
+//                    // no application registered for PDFs
+//                }
+//            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
+    }
 
     public void getReportFarmPraLocation(String CONumber, Integer subyear, String doctorname, String doctornum) {
         // TODO add your handling code here:
