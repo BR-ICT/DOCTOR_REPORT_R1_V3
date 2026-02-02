@@ -129,7 +129,7 @@ public class ReportDoctorSummary extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(90, 140, 50, 22);
 
-        cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025" }));
+        cmbYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026" }));
         getContentPane().add(cmbYear);
         cmbYear.setBounds(150, 140, 200, 30);
 

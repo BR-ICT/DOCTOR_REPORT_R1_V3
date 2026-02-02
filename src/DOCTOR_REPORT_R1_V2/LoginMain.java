@@ -126,8 +126,7 @@ public class LoginMain extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(80, 200, 50, 30);
 
-        CmbCompany.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BangkokRanch(BR)", "FoodCity(FCT)", "Nissin(NSD)", "ANATIS(TH)", "ANATIS(HK)", "ANATIS(SG)" }));
-        CmbCompany.setEnabled(false);
+        CmbCompany.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BangkokRanch(BR)", "WINTHAI(WT)" }));
         CmbCompany.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CmbCompanyActionPerformed(evt);
@@ -150,6 +149,11 @@ public class LoginMain extends javax.swing.JFrame {
         cbm_group.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbm_groupItemStateChanged(evt);
+            }
+        });
+        cbm_group.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbm_groupActionPerformed(evt);
             }
         });
         cbm_group.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -221,6 +225,12 @@ public class LoginMain extends javax.swing.JFrame {
                 LoginDivision = "130";
                 LoginCompanyName = "ANATIS(SG)";
                 LoginUrlConnection = "jdbc:jtopenlite://192.200.9.190";
+            } else if (CmbCompany.getSelectedItem() == "WINTHAI(WT)") {
+                this.setTitle("Login For " + lblCompanyName.getText());
+                LoginCono = "600";
+                LoginDivision = "600";
+                LoginCompanyName = "WINTHAI(WT)";
+                LoginUrlConnection = "jdbc:jtopenlite://192.200.9.190";
             }
 
             conn = ConnectDB2.ConnectionDB();
@@ -281,6 +291,34 @@ public class LoginMain extends javax.swing.JFrame {
 
     private void CmbCompanyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmbCompanyActionPerformed
         // TODO add your handling code here:
+//        System.out.println("Testtest");
+//        String selecteditem = cbm_group.getItemAt(cbm_group.getSelectedIndex());
+        if (CmbCompany.getSelectedItem() == "WINTHAI(WT)") {
+//            cbm_group.removeAllItems();
+//            cbm_group.removeItem("Normal/Local Sale");
+            cbm_group.removeItem("Fish Farm");
+            cbm_group.removeItem("THAIMAX");
+//            cbm_group.addItem("Normal/Local Sale");
+            cbm_programe.removeAllItems();
+            String selecteditem = cbm_group.getItemAt(cbm_group.getSelectedIndex());
+
+//            cbm_programe.removeAllItems();
+            if (selecteditem.equals("Normal/Local Sale")) {
+
+                cbm_programe.addItem("Halal");
+
+            }
+        } else {
+            cbm_group.addItem("Fish Farm");
+            cbm_group.addItem("THAIMAX");
+            cbm_programe.addItem("Normal");
+            cbm_programe.addItem("Local Sale");
+            cbm_programe.addItem("Doctor Rpt Summary - Normal");
+            cbm_programe.addItem("Doctor Rpt Summary - Transfer");
+
+        }
+
+
     }//GEN-LAST:event_CmbCompanyActionPerformed
 
     private void label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseClicked
@@ -317,6 +355,10 @@ public class LoginMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
 
+    private void cbm_groupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbm_groupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbm_groupActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -331,16 +373,24 @@ public class LoginMain extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginMain.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginMain.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginMain.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginMain.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

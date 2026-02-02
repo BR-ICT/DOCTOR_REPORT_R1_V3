@@ -11,6 +11,7 @@ package DOCTOR_REPORT_R1_V2;
  * Project Properties. To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import static DOCTOR_REPORT_R1_V2.LoginMain.LoginCono;
 import static DOCTOR_REPORT_R1_V2.ReportDoctor.year;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Desktop;
@@ -344,14 +345,20 @@ public class ClassGetReport {
             System.out.println(e);
         }
     }
-        public void GetReportHalal(String conum) {
-        // TODO add your handling code here:
+
+    public void GetReportHalal(String conum) {
         String PathFile = System.getProperty("user.dir").toString() + "\\Report\\";
+        String name2 = PathFile + "";
+        if (LoginCono.equals("10")) {
+            name2 = PathFile + "rptHalal.jasper";
+        } else if (LoginCono.equals("600")) {
+            name2 = PathFile + "rptHalal_WT.jasper";
+        }
+        // TODO add your handling code here:
+
 //        String name = PathFile + "SummaryDoctorMonthExcell.jasper";
 //        String name = PathFile + "rptSummaryDoctorMonthXLSX.jasper";
-        String name2 = PathFile + "rptHalal.jasper";
 //        String name3 = PathFile + "rptSummaryDoctorMonthXLSX_farmpra.jasper";
-
         try {
 
             Connection conn = ConnectDB2.ConnectionDB();
@@ -359,6 +366,9 @@ public class ClassGetReport {
             Map parameterss2 = new HashMap();
             parameterss2.put("POAORNO", conum);
             parameterss2.put("imgurl", PathFile);
+            if (LoginCono.equals("600")) {
+                parameterss2.put("CONO", LoginCono);
+            }
 //            JasperPrint print2 = JasperFillManager.fillReport(name, parameterss2, conn);
             JasperPrint print3 = JasperFillManager.fillReport(name2, parameterss2, conn);
 //           JasperPrint print4 = JasperFillManager.fillReport(name3, parameterss2, conn);
@@ -1307,7 +1317,8 @@ public class ClassGetReport {
         }
 
     }
-     public void getReportFarmPraMultiple(String CONumber, Integer subyear) {
+
+    public void getReportFarmPraMultiple(String CONumber, Integer subyear) {
         // TODO add your handling code here:
         File myFile = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString() + "\\farmprareport.pdf");
         String PathFile = System.getProperty("user.dir").toString() + "\\Report\\";
